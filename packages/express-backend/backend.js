@@ -62,7 +62,7 @@ const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
 
 app.get("/users/:id", (req, res) => {
-  const id = req.params["id"]; //or req.params.id
+  const id = req.params["id"];
   let result = findUserById(id);
   if (result === undefined) {
     res.status(404).send("Resource not found.");
@@ -71,14 +71,25 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  let result = findUserById(id);
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    users.users_list = users.users_list.filter((user) => user.id !== id);
+    res.status(204).send("Delete successful.");
+  }
+});
+
 const addUser = (user) => {
-    users["users_list"].push(user);
-    return user;
+  users["users_list"].push(user);
+  return user;
 };
 
 app.post("/users", (req, res) => {
-    console.log(req.body);
-    const userToAdd = req.body;
-    addUser(userToAdd);
-    res.send();
+  console.log(req.body);
+  const userToAdd = req.body;
+  addUser(userToAdd);
+  res.send();
 });
