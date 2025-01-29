@@ -106,9 +106,14 @@ const addUser = (user) => {
   return user;
 };
 
+// Make sure ID WORKS on post
 app.post("/users", (req, res) => {
-  console.log(req.body);
   const userToAdd = req.body;
+  userToAdd["id"] = Math.random();
+  console.log(req.body);
   addUser(userToAdd);
-  res.status(201).send("Content Created Successfully");
+  res.status(201).json({
+    message: "Content Created Successfully",
+    createdUser: userToAdd,
+  });
 });
