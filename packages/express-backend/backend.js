@@ -109,7 +109,7 @@ const addUser = (user) => {
 // Make sure ID WORKS on post
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  userToAdd["id"] = Math.random();
+  userToAdd["id"] = Math.random().toString();
   console.log(req.body);
   addUser(userToAdd);
   res.status(201).json({
