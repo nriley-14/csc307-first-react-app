@@ -49,11 +49,13 @@ function MyApp() {
     postUser(person)
       .then((response) => {
         if (response.status === 201) {
-          res.json();
-          setCharacters([...characters, person, id]);
+          return response.json();
         } else {
           console.log(`Incorrect status code ${response.status}`);
         }
+      })
+      .then((success) => {
+        setCharacters([...characters, success.createdUser]);
       })
       .catch((error) => {
         console.log(error);
