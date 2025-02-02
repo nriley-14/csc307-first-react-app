@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 
 mongoose.set("debug", true);
 
-
 dotenv.config();
 const { MONGO_CONNECTION_STRING } = process.env;
 console.log(MONGO_CONNECTION_STRING);
@@ -36,6 +35,11 @@ function addUser(user) {
   return promise;
 }
 
+function deleteUser(id) {
+  const promise = userModel.findByIdAndDelete(id);
+  return promise;
+}
+
 function findUserByName(name) {
   return userModel.find({ name: name });
 }
@@ -46,6 +50,7 @@ function findUserByJob(job) {
 
 export default {
   addUser,
+  deleteUser,
   getUsers,
   findUserById,
   findUserByName,
