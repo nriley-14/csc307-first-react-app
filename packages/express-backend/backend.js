@@ -66,12 +66,21 @@ app.get("/users/:id", (req, res) => {
 app.get("/users/:name/:job", (req, res) => {
   const name = req.params["name"];
   const job = req.params["job"];
-  let result = userService.findUsersbyNameAndJob(name, job);
-  if (result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
+
+  userService.findUserByName(name).then((user) => {
+    if (!user) {
+      res.status(404).send("Resource not found.");
+    } else {
+      userService.findUserByJob(job).then((user) => {
+        if (!user) {
+          return res.status(404).send("Resource not found.");
+        }
+        res.send(user);
+      });
+    }
+  });
+
+  
 });
 
 app.delete("/users/:id", (req, res) => {
