@@ -85,11 +85,8 @@ app.delete("/users/:id", (req, res) => {
   }
 });
 
-// Make sure ID WORKS on post
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  userToAdd["id"] = Math.random().toString();
-  console.log(req.body);
   userService.addUser(userToAdd);
   res.status(201).json({
     message: "Content Created Successfully",
